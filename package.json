@@ -1,0 +1,17 @@
+{
+    "name": "mern-ecommerce",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://github.com/PedroEdu6786/mern-ecommerce.git",
+    "author": "PedroEdu6786 <pedrcg835@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "start": "nodemon backend/server"
+    },
+    "dependencies": {
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.4"
+    }
+}
