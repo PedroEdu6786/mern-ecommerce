@@ -1,4 +1,8 @@
-import { ORDER_CREATE, ORDER_DETAILS } from '../constants/orderConstants'
+import {
+    ORDER_CREATE,
+    ORDER_DETAILS,
+    ORDER_PAY,
+} from '../constants/orderConstants'
 
 export const orderCreateReducer = (state = {}, action) => {
     switch (action.type) {
@@ -29,6 +33,25 @@ export const orderDetailsReducer = (
 
         case ORDER_DETAILS._FAIL:
             return { loading: false, error: action.payload }
+
+        default:
+            return state
+    }
+}
+
+export const orderPayReducer = (state = {}, action) => {
+    switch (action.type) {
+        case ORDER_PAY._REQUEST:
+            return { loading: true }
+
+        case ORDER_PAY._SUCCESS:
+            return { loading: false, success: true }
+
+        case ORDER_PAY._FAIL:
+            return { loading: false, error: action.payload }
+
+        case ORDER_PAY._RESET:
+            return {}
 
         default:
             return state
