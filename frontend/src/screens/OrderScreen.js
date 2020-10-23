@@ -3,7 +3,6 @@ import axios from 'axios'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { Link } from 'react-router-dom'
 import {
-    Button,
     Row,
     Col,
     ListGroup,

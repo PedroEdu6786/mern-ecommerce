@@ -16,3 +16,9 @@ export const ORDER_PAY = {
     _FAIL: 'ORDER_PAY_FAIL',
     _RESET: 'ORDER_PAY_RESET',
 }
+
+export const ORDER_LIST_MY = {
+    _REQUEST: 'ORDER_LIST_MY_REQUEST',
+    _SUCCESS: 'ORDER_LIST_MY_SUCCESS',
+    _FAIL: 'ORDER_LIST_MY_FAIL',
+}
