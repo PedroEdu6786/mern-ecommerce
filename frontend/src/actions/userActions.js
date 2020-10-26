@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {
     USER_DETAILS,
+    USER_LIST,
     USER_LOGIN,
     USER_LOGOUT,
     USER_REGISTER,
@@ -46,6 +47,7 @@ export const logout = () => (dispatch) => {
     dispatch({ type: USER_LOGOUT })
     dispatch({ type: USER_DETAILS._RESET })
     dispatch({ type: ORDER_LIST_MY._RESET })
+    dispatch({ type: USER_LIST._RESET })
 }
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -142,6 +144,37 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     } catch (err) {
         dispatch({
             type: USER_UPDATE_PROFILE._FAIL,
+            payload:
+                err.response && err.response.data.message
+                    ? err.response.data.message
+                    : err.message,
+        })
+    }
+}
+
+export const listUsers = () => async (dispatch, getState) => {
+    try {
+        dispatch({ type: USER_LIST._REQUEST })
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        }
+
+        const { data } = await axios.get(`/api/users`, config)
+
+        dispatch({
+            type: USER_LIST._SUCCESS,
+            payload: data,
+        })
+    } catch (err) {
+        dispatch({
+            type: USER_LIST._FAIL,
             payload:
                 err.response && err.response.data.message
                     ? err.response.data.message

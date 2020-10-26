@@ -1,5 +1,6 @@
 import {
     USER_DETAILS,
+    USER_LIST,
     USER_LOGIN,
     USER_LOGOUT,
     USER_REGISTER,
@@ -57,6 +58,21 @@ export const userUpdateProfileReducer = (state = {}, action) => {
             return { loading: false, success: true, userInfo: action.payload }
         case USER_UPDATE_PROFILE._FAIL:
             return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
+export const userListReducer = (state = { users: [] }, action) => {
+    switch (action.type) {
+        case USER_LIST._REQUEST:
+            return { loading: true }
+        case USER_LIST._SUCCESS:
+            return { loading: false, users: action.payload }
+        case USER_LIST._FAIL:
+            return { loading: false, error: action.payload }
+        case USER_LIST._RESET:
+            return { users: [] }
         default:
             return state
     }
