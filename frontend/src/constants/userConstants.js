@@ -32,3 +32,9 @@ export const USER_LIST = {
     _FAIL: 'USER_LIST_FAIL',
     _RESET: 'USER_LIST_RESET',
 }
+
+export const USER_DELETE = {
+    _REQUEST: 'USER_DELETE_REQUEST',
+    _SUCCESS: 'USER_DELETE_SUCCESS',
+    _FAIL: 'USER_DELETE_FAIL',
+}

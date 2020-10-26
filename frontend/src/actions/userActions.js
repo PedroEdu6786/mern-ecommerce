@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {
+    USER_DELETE,
     USER_DETAILS,
     USER_LIST,
     USER_LOGIN,
@@ -175,6 +176,36 @@ export const listUsers = () => async (dispatch, getState) => {
     } catch (err) {
         dispatch({
             type: USER_LIST._FAIL,
+            payload:
+                err.response && err.response.data.message
+                    ? err.response.data.message
+                    : err.message,
+        })
+    }
+}
+
+export const deleteUser = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: USER_DELETE._REQUEST })
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        }
+
+        const { data } = await axios.delete(`/api/users/${id}`, config)
+
+        dispatch({
+            type: USER_DELETE._SUCCESS,
+        })
+    } catch (err) {
+        dispatch({
+            type: USER_DELETE._FAIL,
             payload:
                 err.response && err.response.data.message
                     ? err.response.data.message
