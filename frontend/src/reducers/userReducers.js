@@ -5,6 +5,7 @@ import {
     USER_LOGIN,
     USER_LOGOUT,
     USER_REGISTER,
+    USER_UPDATE,
     USER_UPDATE_PROFILE,
 } from '../constants/userConstants'
 
@@ -87,6 +88,21 @@ export const userDeleteReducer = (state = {}, action) => {
             return { loading: false, success: true }
         case USER_DELETE._FAIL:
             return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
+export const userUpdateReducer = (state = { user: {} }, action) => {
+    switch (action.type) {
+        case USER_UPDATE._REQUEST:
+            return { loading: true }
+        case USER_UPDATE._SUCCESS:
+            return { loading: false, success: true }
+        case USER_UPDATE._FAIL:
+            return { loading: false, error: action.payload }
+        case USER_UPDATE._RESET:
+            return { user: {} }
         default:
             return state
     }
