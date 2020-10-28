@@ -2,6 +2,7 @@ import {
     PRODUCT_LIST,
     PRODUCT_DETAILS,
     PRODUCT_DELETE,
+    PRODUCT_CREATE,
 } from '../constants/productConstants'
 
 export const productListReducer = (state = { products: [] }, action) => {
@@ -33,10 +34,7 @@ export const productDetailsReducer = (
     }
 }
 
-export const productDeleteReducer = (
-    state = { product: { reviews: [] } },
-    action
-) => {
+export const productDeleteReducer = (state = {}, action) => {
     switch (action.type) {
         case PRODUCT_DELETE._REQUEST:
             return { loading: true, ...state }
@@ -44,6 +42,21 @@ export const productDeleteReducer = (
             return { loading: false, success: true }
         case PRODUCT_DELETE._FAIL:
             return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
+export const productCreateReducer = (state = {}, action) => {
+    switch (action.type) {
+        case PRODUCT_CREATE._REQUEST:
+            return { loading: true, ...state }
+        case PRODUCT_CREATE._SUCCESS:
+            return { loading: false, success: true, product: action.payload }
+        case PRODUCT_CREATE._FAIL:
+            return { loading: false, error: action.payload }
+        case PRODUCT_CREATE._RESET:
+            return {}
         default:
             return state
     }
