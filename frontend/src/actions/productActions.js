@@ -1,5 +1,9 @@
 import axios from 'axios'
-import { PRODUCT_LIST, PRODUCT_DETAILS } from '../constants/productConstants'
+import {
+    PRODUCT_LIST,
+    PRODUCT_DETAILS,
+    PRODUCT_DELETE,
+} from '../constants/productConstants'
 
 export const listProducts = () => async (dispatch) => {
     try {
@@ -29,6 +33,36 @@ export const listProductDetails = (id) => async (dispatch) => {
     } catch (err) {
         dispatch({
             type: PRODUCT_DETAILS._FAIL,
+            payload:
+                err.response && err.response.data.message
+                    ? err.response.data.message
+                    : err.message,
+        })
+    }
+}
+
+export const deleteProduct = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: PRODUCT_DELETE._REQUEST })
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        }
+
+        await axios.delete(`/api/products/${id}`, config)
+
+        dispatch({
+            type: PRODUCT_DELETE._SUCCESS,
+        })
+    } catch (err) {
+        dispatch({
+            type: PRODUCT_DELETE._FAIL,
             payload:
                 err.response && err.response.data.message
                     ? err.response.data.message
