@@ -3,6 +3,7 @@ import {
     PRODUCT_DETAILS,
     PRODUCT_DELETE,
     PRODUCT_CREATE,
+    PRODUCT_UPDATE,
 } from '../constants/productConstants'
 
 export const productListReducer = (state = { products: [] }, action) => {
@@ -57,6 +58,21 @@ export const productCreateReducer = (state = {}, action) => {
             return { loading: false, error: action.payload }
         case PRODUCT_CREATE._RESET:
             return {}
+        default:
+            return state
+    }
+}
+
+export const productUpdateReducer = (state = { product: {} }, action) => {
+    switch (action.type) {
+        case PRODUCT_UPDATE._REQUEST:
+            return { loading: true, ...state }
+        case PRODUCT_UPDATE._SUCCESS:
+            return { loading: false, success: true, product: action.payload }
+        case PRODUCT_UPDATE._FAIL:
+            return { loading: false, error: action.payload }
+        case PRODUCT_UPDATE._RESET:
+            return { product: {} }
         default:
             return state
     }
