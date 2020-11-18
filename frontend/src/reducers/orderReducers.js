@@ -1,5 +1,6 @@
 import {
     ORDER_CREATE,
+    ORDER_DELIVER,
     ORDER_DETAILS,
     ORDER_LIST,
     ORDER_LIST_MY,
@@ -53,6 +54,25 @@ export const orderPayReducer = (state = {}, action) => {
             return { loading: false, error: action.payload }
 
         case ORDER_PAY._RESET:
+            return {}
+
+        default:
+            return state
+    }
+}
+
+export const orderDeliverReducer = (state = {}, action) => {
+    switch (action.type) {
+        case ORDER_DELIVER._REQUEST:
+            return { loading: true }
+
+        case ORDER_DELIVER._SUCCESS:
+            return { loading: false, success: true }
+
+        case ORDER_DELIVER._FAIL:
+            return { loading: false, error: action.payload }
+
+        case ORDER_DELIVER._RESET:
             return {}
 
         default:
