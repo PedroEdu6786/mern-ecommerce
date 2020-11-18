@@ -1,6 +1,7 @@
 const path = require('path')
 const express = require('express')
 const dotenv = require('dotenv')
+const morgan = require('morgan')
 const { notFound, errorHandler } = require('./middleware/errorMiddleware')
 const connectDB = require('./config/db')
 
@@ -14,6 +15,10 @@ dotenv.config()
 connectDB()
 
 const app = express()
+
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'))
+}
 
 app.use(express.json())
 
