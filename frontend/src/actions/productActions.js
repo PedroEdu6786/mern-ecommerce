@@ -6,6 +6,7 @@ import {
     PRODUCT_CREATE,
     PRODUCT_UPDATE,
     PRODUCT_CREATE_REVIEW,
+    PRODUCT_TOP,
 } from '../constants/productConstants'
 
 export const listProducts = (keyword = '', pageNumber = '') => async (
@@ -22,6 +23,24 @@ export const listProducts = (keyword = '', pageNumber = '') => async (
     } catch (err) {
         dispatch({
             type: PRODUCT_LIST._FAIL,
+            payload:
+                err.response && err.response.data.message
+                    ? err.response.data.message
+                    : err.message,
+        })
+    }
+}
+
+export const listTopProducts = () => async (dispatch) => {
+    try {
+        dispatch({ type: PRODUCT_TOP._REQUEST })
+
+        const { data } = await axios.get(`/api/products/top`)
+
+        dispatch({ type: PRODUCT_TOP._SUCCESS, payload: data })
+    } catch (err) {
+        dispatch({
+            type: PRODUCT_TOP._FAIL,
             payload:
                 err.response && err.response.data.message
                     ? err.response.data.message
