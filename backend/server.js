@@ -18,13 +18,12 @@ const app = express()
 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
+    app.get('/', (req, res) => {
+        res.send('API running')
+    })
 }
 
 app.use(express.json())
-
-app.get('/', (req, res) => {
-    res.send('API running')
-})
 
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
@@ -39,8 +38,15 @@ const dirname = path.resolve()
 
 app.use('/uploads', express.static(path.join(dirname, '/uploads')))
 
-app.use(notFound)
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(dirname, '/frontend/build')))
 
+    app.get('*', (req, res) =>
+        res.sendFile(path.resolve(dirname, 'frontend', 'build', 'index.html'))
+    )
+}
+
+app.use(notFound)
 app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000
