@@ -4,6 +4,7 @@ import {
     PRODUCT_DELETE,
     PRODUCT_CREATE,
     PRODUCT_UPDATE,
+    PRODUCT_CREATE_REVIEW,
 } from '../constants/productConstants'
 
 export const productListReducer = (state = { products: [] }, action) => {
@@ -73,6 +74,21 @@ export const productUpdateReducer = (state = { product: {} }, action) => {
             return { loading: false, error: action.payload }
         case PRODUCT_UPDATE._RESET:
             return { product: {} }
+        default:
+            return state
+    }
+}
+
+export const productReviewCreateReducer = (state = {}, action) => {
+    switch (action.type) {
+        case PRODUCT_CREATE_REVIEW._REQUEST:
+            return { loading: true, ...state }
+        case PRODUCT_CREATE_REVIEW._SUCCESS:
+            return { loading: false, success: true }
+        case PRODUCT_CREATE_REVIEW._FAIL:
+            return { loading: false, error: action.payload }
+        case PRODUCT_CREATE_REVIEW._RESET:
+            return {}
         default:
             return state
     }

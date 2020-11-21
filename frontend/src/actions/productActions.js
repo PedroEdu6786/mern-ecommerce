@@ -5,6 +5,7 @@ import {
     PRODUCT_DELETE,
     PRODUCT_CREATE,
     PRODUCT_UPDATE,
+    PRODUCT_CREATE_REVIEW,
 } from '../constants/productConstants'
 
 export const listProducts = () => async (dispatch) => {
@@ -132,6 +133,40 @@ export const updateProduct = (product) => async (dispatch, getState) => {
     } catch (err) {
         dispatch({
             type: PRODUCT_UPDATE._FAIL,
+            payload:
+                err.response && err.response.data.message
+                    ? err.response.data.message
+                    : err.message,
+        })
+    }
+}
+
+export const createProductReview = (productId, review) => async (
+    dispatch,
+    getState
+) => {
+    try {
+        dispatch({ type: PRODUCT_CREATE_REVIEW._REQUEST })
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        }
+
+        await axios.post(`/api/products/${productId}/reviews`, review, config)
+
+        dispatch({
+            type: PRODUCT_CREATE_REVIEW._SUCCESS,
+        })
+    } catch (err) {
+        dispatch({
+            type: PRODUCT_CREATE_REVIEW._FAIL,
             payload:
                 err.response && err.response.data.message
                     ? err.response.data.message
